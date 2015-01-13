@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+		p:definitions="/WEB-INF/layouts/layouts.xml" />
+
+	<bean id="tilesViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		p:viewClass="org.springframework.web.servlet.view.tiles2.TilesView"
+		p:order="1" />
+
+	 
+	<bean id="simpleUrlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/login.htm">loginController</prop>
+				<prop key="/registration.htm">registrationController</prop>
+				<prop key="/showitems.htm">showItemsController</prop>
+				<prop key="/advancedsearch.htm">advancedSearchController</prop>
+				<prop key="/edititem.htm">editItemController</prop>
+				<prop key="/showmyitems.htm">showMyItemsController</prop>
+			</props>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="useraccessInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+
+
+	<bean id="useraccessInterceptor" class="com.epam.training.web.UserAccessInterceptor">
+	</bean>
+
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/views/" p:suffix=".jspx" p:order="2" />
+
+	<bean id="loginController"
+		class="com.epam.training.web.LoginController" init-method="initDAO"
+		p:commandName="UserTO" p:commandClass="com.epam.training.persistence.pojo.UserTO"
+		p:validator-ref="loginValidator" p:formView="Login"
+		p:successView="/showitems.htm?command=showitems">
+		<lookup-method name="getUserRole" bean="userrole" />
+	</bean>
+
+	<bean id="userrole" class="com.epam.training.persistence.pojo.UserRole"
+		scope="session">
+	</bean>
+
+	<bean id="showMyItemsController" class="com.epam.training.web.ShowMyItemsController"
+		init-method="initDAO" p:commandName="ItemTO"
+		p:commandClass="com.epam.training.persistence.pojo.ItemTO" p:formView="ShowMyItems"
+		p:successView="EditItem"
+		>
+		<property name="ITEMS_ON_MY_ITEMS_PAGE" value="5"></property>
+		<lookup-method name="getUserRole" bean="userrole" />
+	</bean>
+
+	<bean id="editItemController" class="com.epam.training.web.EditItemController"
+		init-method="initDAO" p:commandName="ItemTO"
+		p:commandClass="com.epam.training.persistence.pojo.ItemTO"
+		p:validator-ref="editItemValidator" p:formView="EditItem"
+		p:successView="ShowItems" p:bindOnNewForm="true">
+		<lookup-method name="getUserRole" bean="userrole" />
+	</bean>
+
+	<bean id="advancedSearchController" class="com.epam.training.web.AdvancedSearchController"
+		p:commandName="AdvancedSearch"
+		p:commandClass="com.epam.training.persistence.pojo.AdvancedSearch"
+		p:validator-ref="advancedSearchValidator" p:formView="AdvancedSearch"
+		p:customDateEditor-ref="customDateEditor" p:successView="ShowItems"></bean>
+
+
+	<bean id="loginValidator" class="com.epam.training.web.LoginValidator" />
+	<bean id="registrationValidator" class="com.epam.training.web.RegistrationValidator" init-method="initDAO"/>
+	<bean id="bidValidator" class="com.epam.training.web.BidValidator" />
+	<bean id="editItemValidator" class="com.epam.training.web.EditItemValidator" />
+
+	<bean id="searchValidators" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="bidValidator" />
+				<ref bean="advancedSearchValidator" />
+				<ref bean="simpleSearchValidator" />
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="advancedSearchValidator" class="com.epam.training.web.AdvancedSearchValidator" />
+	<bean id="simpleSearchValidator" class="com.epam.training.web.SimpleSearchValidator" />
+
+	<bean id="registrationController" name="/registration.htm"
+		class="com.epam.training.web.RegistrationController" init-method="initDAO"
+		p:commandName="UserTO" p:commandClass="com.epam.training.persistence.pojo.UserTO"
+		p:validator-ref="registrationValidator" p:formView="Registration"
+		p:successView="ShowItems" />
+
+
+	<bean id="showItemsController" class="com.epam.training.web.ShowItemsController"
+		init-method="initDAO" p:methodNameResolver-ref="actionResolver"
+		p:validators-ref="searchValidators">
+		<lookup-method name="getUserRole" bean="userrole" />
+		<property name="ITEMS_ON_PAGE" value="5"></property>
+	</bean>
+
+
+
+	<bean id="actionResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="command" />
+	</bean>
+
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+
+	<bean id="customDateEditor"
+		class="org.springframework.beans.propertyeditors.CustomDateEditor">
+		<constructor-arg>
+			<bean class="java.text.SimpleDateFormat">
+				<constructor-arg>
+					<value>dd/MM/yyyy HH:mm</value>
+				</constructor-arg>
+				<property name="lenient">
+					<value>false</value>
+				</property>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<value>true</value>
+		</constructor-arg>
+	</bean>
+</beans>	

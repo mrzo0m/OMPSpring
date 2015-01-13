@@ -1,0 +1,111 @@
+
+#userLogin {
+	font-weight: bold;
+	margin-left: 1em;
+}
+
+body {
+	background-color: #FFF;
+	margin: 5px;
+	font-family: verdana, sans-serif;
+}
+
+form {
+	font-family: "Arial Black", Gadget, sans-serif;
+	margin-top: 3em;
+	margin-left: 3em;
+}
+
+.clear {
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+
+h1,h2,h3 {
+	color: #000;
+	margin: 0;
+	padding: 1.2em;
+}
+
+p {
+	margin: 0 0 0.75em 0;
+	line-height: 1.5em;
+}
+
+.erorrs {
+	float: left;
+	margin-left: 5em;
+	color: red;
+}
+.error {
+		margin-left: 1em;
+    	color: red;
+    }
+
+.btn {
+  color: black;
+  background: #99CCFF url(../images/headbkg.JPG) repeat-x;
+  font-weight: bold;
+  border: 1px solid black;
+}
+ 
+.btn:hover {
+ color: #FFF;
+  background: black;
+}
+
+.buttons {
+	margin-top: 2em;
+	float: left;
+	color: blue;
+}
+.buttons ul li {float: left; display: inline; padding-left: 10px; }
+
+.loginInfo {
+	margin-top: 2em;
+	padding-left: 1em;
+	float: right;
+	color: blue;
+}
+
+.loginInfo #userLogin {
+	margin-right: 6em;
+}
+
+.tinyForm {
+	margin: 0 auto;
+	padding: 3px;
+	float: left;
+}
+
+.statusmsg {
+	color: green;
+	font-style: italic;
+}
+hr {
+  border:0;
+  border-top: 1px solid #C0C0C0;
+  height: 0;
+  background: #E19832;
+}
+
+.form-input {
+    display: inline-block;
+}
+.form-sub-label-container {
+    display: inline-block;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+.form-textbox, .form-textarea, .form-dropdown, .form-list {
+    border: 1px solid #555555;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4) inset;
+    padding: 4px;
+}
+.form-sub-label {
+    color: #999999;
+    display: block;
+    font-size: 9px;
+}

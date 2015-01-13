@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<c:url var="cssUrl" value="/styles/editItem.css" />
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<link rel="stylesheet" type="text/css" media="screen" href="${cssUrl}" />
+	<spring:message code="label_welcome" var="labelWelcome" />
+	<c:url var="logoutUrl" value="/showitems.htm?command=logout" />
+
+	<div class="loginInfo">
+		<c:out value="${labelWelcome}" />
+		<c:choose>
+			<c:when test="${not sessionScope.userrole.authorized}">
+				<c:out value="guest" />
+			</c:when>
+			<c:otherwise>
+				${sessionScope.userrole.user.login} 
+				<a href="${logoutUrl}">logout</a>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+
+	<form:form name="editItemForm" id="editItemForm" action=""
+		method="POST" commandName="ItemTO">
+		<div class="global">
+
+			<div class="outer">
+				<div class="field">
+					<label for="itemTitleInput">Title of item:</label>
+					<form:input path="title" id="itemTitleInput" />
+
+				</div>
+				<div class="message">
+					<form:errors path="title" cssClass="error"></form:errors>
+				</div>
+				<div class="field">
+					<div class="description">
+						<label for="descriptionInput">Description:</label>
+					</div>
+					<form:textarea path="description" id="descriptionInput" cols="20"
+						rows="3"></form:textarea>
+
+				</div>
+				<div class="message">
+					<form:errors path="description" cssClass="error"></form:errors>
+				</div>
+				<div class="clear"></div>
+				<div class="field">
+					<label for="startPriceInput">Start price:</label>
+					<form:input path="startPrice" id="startPriceInput" />
+
+				</div>
+				<div class="message">
+					<form:errors path="startPrice" cssClass="error"></form:errors>
+				</div>
+				<div class="field">
+					<label for="bidIncInput" id="labelBidInc">Bid Increment:</label>
+					<form:input path="bidIncrement" id="bidIncInput" />
+
+				</div>
+				<div class="message">
+					<form:errors path="" cssClass="error"></form:errors>
+				</div>
+				<div class="field">
+
+					<label for="buyItNowCHK">Buy it now</label>
+					<form:checkbox path="buyItNow" />
+				</div>
+				<div class="field">
+					<label for="timeLeftInput" id="labelTimeLeft">Time left
+						(minutes): </label>
+					<form:input path="timeLeft" id="timeLeftInput" />
+
+				</div>
+				<div class="message">
+					<form:errors path="timeLeft" cssClass="error"></form:errors>
+				</div>
+				<div class="buttonLine">
+					<input type="submit" class="btn" value="publish / save" /> <input type="reset"
+						class="btn" value="reset" />
+				</div>
+			</div>
+		</div>
+	</form:form>
+
+</div>

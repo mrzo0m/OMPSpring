@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="itemtable" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<c:url var="showitemsUrl" value="/showitems.htm?command=showitems"></c:url>
+	<jsp:useBean id="dateValue" class="java.util.Date" />
+	<div id="showItems">
+		<div class="clear"></div>
+		<table class="sort" id="itemTable">
+			<caption>Items</caption>
+			<thead>
+				<tr>
+					<c:choose>
+						<c:when test="${empty requestScope.order}">
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=uid&amp;order=asc'">UID&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=TITLE&amp;order=asc'">Title&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=DESCRIPTION&amp;order=asc'">Description&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=SELLER&amp;order=asc'">Seller&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=START_PRICE&amp;order=asc'">Start
+								price&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BID_INCREMENT&amp;order=asc'">BidInc&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BEST_OFFER&amp;order=asc'">Best
+								offer&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BIDDER&amp;order=asc'">Bidder&#8645;</td>
+							<td
+								onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=STOP_DATE&amp;order=asc'">Stop
+								date&#8645;</td>
+							<td>Category</td>
+							<td>Bidding</td>
+
+						</c:when>
+						<c:when test="${requestScope.order eq 'desc'}">
+
+							<c:if test="${requestScope.sort ne 'uid'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=uid&amp;order=asc'">UID</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'uid'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=uid&amp;order=asc'">UID&#8593;</td>
+							</c:if>
+
+							<c:if test="${requestScope.sort ne 'TITLE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=TITLE&amp;order=asc'">Title</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'TITLE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=TITLE&amp;order=asc'">Title&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'DESCRIPTION'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=DESCRIPTION&amp;order=asc'">Description</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'DESCRIPTION'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=DESCRIPTION&amp;order=asc'">Description&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'SELLER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=SELLER&amp;order=asc'">Seller</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'SELLER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=SELLER&amp;order=asc'">Seller&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'START_PRICE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=START_PRICE&amp;order=asc'">Start
+									price</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'START_PRICE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=START_PRICE&amp;order=asc'">Start
+									price&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'BID_INCREMENT'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BID_INCREMENT&amp;order=asc'">BidInc</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'BID_INCREMENT'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BID_INCREMENT&amp;order=asc'">BidInc&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'BEST_OFFER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BEST_OFFER&amp;order=asc'">Best
+									offer</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'BEST_OFFER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BEST_OFFER&amp;order=asc'">Best
+									offer&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'BIDDER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BIDDER&amp;order=asc'">Bidder</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'BIDDER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BIDDER&amp;order=desc'">Bidder&#8593;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'STOP_DATE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=STOP_DATE&amp;order=asc'">Stop
+									date</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'STOP_DATE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=STOP_DATE&amp;order=desc'">Stop
+									date&#8593;</td>
+							</c:if>
+							<td>Category</td>
+							<td>Bidding</td>
+
+						</c:when>
+						<c:when test="${requestScope.order eq 'asc'}">
+							<c:if test="${requestScope.sort ne 'uid'}">
+								<td class="asc"
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=uid&amp;order=asc'">UID</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'uid'}">
+								<td class="asc"
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=uid&amp;order=desc'">UID&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'TITLE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=TITLE&amp;order=asc'">Title</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'TITLE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=TITLE&amp;order=desc'">Title&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'DESCRIPTION'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=DESCRIPTION&amp;order=asc'">Description</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'DESCRIPTION'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=DESCRIPTION&amp;order=desc'">Description&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'SELLER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=SELLER&amp;order=asc'">Seller</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'SELLER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=SELLER&amp;order=desc'">Seller&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'START_PRICE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=START_PRICE&amp;order=asc'">Start
+									price</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'START_PRICE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=START_PRICE&amp;order=desc'">Start
+									price&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'BID_INCREMENT'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BID_INCREMENT&amp;order=asc'">BidInc</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'BID_INCREMENT'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BID_INCREMENT&amp;order=desc'">BidInc&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'BEST_OFFER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BEST_OFFER&amp;order=asc'">Best
+									offer</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'BEST_OFFER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BEST_OFFER&amp;order=desc'">Best
+									offer&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'BIDDER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BIDDER&amp;order=asc'">Bidder</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'BIDDER'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=BIDDER&amp;order=desc'">Bidder&#8595;</td>
+							</c:if>
+							<c:if test="${requestScope.sort ne 'STOP_DATE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=STOP_DATE&amp;order=asc'">Stop
+									date</td>
+							</c:if>
+							<c:if test="${requestScope.sort eq 'STOP_DATE'}">
+								<td
+									onclick="location.href='${showitemsUrl}&amp;pageNumber=${requestScope.pageNumber}&amp;sort=STOP_DATE&amp;order=desc'">Stop
+									date&#8595;</td>
+							</c:if>
+							<td>Category</td>
+							<td>Bidding</td>
+						</c:when>
+					</c:choose>
+
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items='${requestScope.allitems}' var='p'>
+					<tr>
+						<td><c:out value='${p.uid}' /></td>
+						<td><c:out value='${p.title}' /></td>
+						<td><c:out value='${p.description}' /></td>
+						<td><c:out value='${p.seller}' /></td>
+						<td><c:out value='${p.startPrice}' /></td>
+						<td><c:out value='${p.bidIncrement}' /></td>
+						<td><c:out value='${p.bestOffer}' /></td>
+						<td><c:out value='${p.bidder}' /></td>
+						<td class="time"><c:if test="${ not empty p.stopDate}">
+								
+								<fmt:formatDate timeZone="GMT+4:00" pattern="dd/MM/yyyy HH:mm"
+									value="${p.stopDate}" />
+							</c:if></td>
+						<td><c:out value='${p.category}' /></td>
+						<c:choose>
+							<c:when test="${not sessionScope.userrole.authorized}">
+								<td><c:url var="registerUrl" value="/registration.htm"></c:url>
+									<a href="${registerUrl}">registration</a> <c:out
+										value=' needed' /></td>
+							</c:when>
+							<c:when test="${empty p.stopDate and not empty p.bidder}">
+								<td>Not for sale</td>
+							</c:when>
+							<c:when test="${p.seller eq sessionScope.userrole.user.login}">
+								<td>You owner</td>
+							</c:when>
+							<c:when test="${p.buyItNow eq true and empty p.stopDate}">
+								<td><form:form cssClass="tinyForm" action="showitems.htm"
+										method="POST">
+										<input type="hidden" name="command" value="buy" />
+										<input type="hidden" name="itemId" value='${p.uid}' />
+										<input type="hidden" name="bid" value='${p.startPrice}' />
+										<input type="image" className="buyBtn" src="images/buy.png"
+											value="buy" />
+									</form:form></td>
+							</c:when>
+							<c:when test="${p.stopDate gt dateValue}">
+								<td><form:form cssClass="tinyForm" name="bidForm"
+										action="showitems.htm" method="POST">
+										<input type="hidden" name="command" value="bid" />
+										<div class="outerBid">
+											<div class="fieldBid">
+
+												<input class="bidField" type="text" name="bid"></input> <input
+													type="hidden" name="itemId" value='${p.uid}' /> <input
+													type="hidden" name="bidInc" value='${p.bidIncrement}' /> <input
+													type="hidden" name="bestOffer" value='${p.bestOffer}' /> <input
+													type="hidden" name="startPrice" value='${p.startPrice}' />
+													<input
+													type="hidden" name="pageNumber" value='${requestScope.pageNumber}' />
+													<input
+													type="hidden" name="sort" value='${requestScope.sort}' />
+													<input
+													type="hidden" name="order" value='${requestScope.order}' />
+											</div>
+											<div class="fieldBid">
+												<input type="image" className="bidBtn" src="images/bid.png"
+													value="bid" />
+											</div>
+											<c:if test="${bidItemId eq p.uid}">
+												<div class="error">
+													<c:out value='${bidError}' />
+												</div>
+											</c:if>
+										</div>
+									</form:form></td>
+							</c:when>
+							<c:otherwise>
+								<td>Not for sale</td>
+							</c:otherwise>
+						</c:choose>
+
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<div>
+			<c:if test="${ not empty requestScope.sort}">
+				<c:url var="back"
+					value="/showitems.htm?command=showitems&amp;pageNumber=${requestScope.pageNumber-1}&amp;sort=${requestScope.sort}&amp;order=${requestScope.order}"></c:url>
+				<c:url var="forward"
+					value="/showitems.htm?command=showitems&amp;pageNumber=${requestScope.pageNumber+1}&amp;sort=${requestScope.sort}&amp;order=${requestScope.order}"></c:url>
+			</c:if>
+			<c:if test="${empty requestScope.sort}">
+				<c:url var="back"
+					value="/showitems.htm?command=showitems&amp;pageNumber=${requestScope.pageNumber-1}"></c:url>
+				<c:url var="forward"
+					value="/showitems.htm?command=showitems&amp;pageNumber=${requestScope.pageNumber+1}"></c:url>
+			</c:if>
+			<ul class="nav">
+				<c:if test="${requestScope.pageNumber gt 1}">
+					<li><input type="image" src="images/arrow-left.png"
+						value="back" onclick="location.href='${back}'" /></li>
+				</c:if>
+				<li
+					style="color: gray; margin-left: 1em; margin-right: 1em; font-size: 2em;">${requestScope.pageNumber}</li>
+				<c:if test="${not empty requestScope.allitems}">
+					<li><input type="image" src="images/arrow-right.png"
+						value="forward" onclick="location.href='${forward}'" /></li>
+				</c:if>
+			</ul>
+
+		</div>
+
+	</div>
+
+</div>

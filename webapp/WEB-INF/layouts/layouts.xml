@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="default" template="/WEB-INF/layouts/default.jspx">
+		<put-attribute name="header" value="/WEB-INF/views/header.jspx" />
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+	</definition>
+	<definition extends="default" name="Login">
+		<put-attribute name="title" value=" Login page" />
+		<put-attribute name="body" value="/WEB-INF/views/Login.jspx" />
+	</definition>
+	<definition extends="default" name="ShowItems">
+		<put-attribute name="title" value="ShowItems page" />
+		<put-attribute name="body" value="/WEB-INF/views/ShowItems.jspx" />
+		<put-attribute name="simplesearch" value="/WEB-INF/views/SimpleSearchForm.jspx" />
+		<put-attribute name="itemtable" value="/WEB-INF/views/ItemTable.jspx" />
+		
+	</definition>
+	<definition extends="default" name="Registration">
+		<put-attribute name="title" value=" Registration page" />
+		<put-attribute name="body" value="/WEB-INF/views/Registration.jspx" />
+	</definition>
+		<definition extends="default" name="AdvancedSearch">
+		<put-attribute name="title" value=" ShowItems page" />
+		<put-attribute name="simplesearch" value="/WEB-INF/views/SimpleSearchForm.jspx" />
+		<put-attribute name="body" value="/WEB-INF/views/AdvancedSearchForm.jspx" />
+	</definition>
+	<definition extends="default" name="EditItem">
+		<put-attribute name="title" value=" Edit Item page" />
+		<put-attribute name="body" value="/WEB-INF/views/EditItem.jspx" />
+	</definition>
+	<definition extends="default" name="ShowMyItems">
+		<put-attribute name="title" value=" Show My Items page" />
+		<put-attribute name="body" value="/WEB-INF/views/ShowMyItems.jspx" />
+	</definition>
+
+</tiles-definitions>

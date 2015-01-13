@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<project default="dist" name="OMPADV" basedir="..">
+
+	<property name="app.name" value="${ant.project.name}" />
+	<property environment="env" />
+	<property name="db.hostname" value="localhost" />
+	<property name="db.port" value="1521" />
+	<property name="db.sid" value="xe" />
+	<property name="db.admin" value="SYSTEM" />
+	<property name="db.passwordForAdmin" value="5FD3YccKt" />
+	<property name="db.user" value="OMPTEST" />
+	<property name="db.password" value="test" />
+	<property name="context.root" value="OnlineMarketplace" />
+	<property name="db.url" value="jdbc:oracle:thin:@${db.hostname}:${db.port}:${db.sid}" />
+	<property name="src.dir" location="${basedir}/src" />
+	<property name="build" location="${basedir}/build" />
+	<property name="build.classes" location="${build}/classes" />
+	<property name="dist.dir" location="${basedir}/dist" />
+	<property name="libs.dir" location="${basedir}/lib" />
+	<property name="sql.dir" location="${basedir}/sql" />
+	<property name="ant.dir" location="${basedir}/ant" />
+	<property name="doc.dir" location="${basedir}/doc" />
+	<property name="resources.dir" location="${basedir}/resources" />
+	<property name="sqlschema.template" location="${sql.dir}/template" />
+	<property name="descriptor.template" location="${basedir}/webapp/descrptortemplate" />
+	<property name="assembled.properties" location="${ant.dir}/all.properties" />
+	<property file="${ant.dir}/build.version"/>
+	<property name="build.number" value="${build.major.number}.${build.minor.number}"/>
+	
+
+	<path id="libs.dir">
+		<fileset dir="lib" includes="**/*.jar" />
+	</path>
+
+	<target name="clean" description="Removes all temporary files">
+		<!-- Удаление файлов -->
+		<delete dir="${dist.dir}" />
+		<delete dir="${build.classes}" />
+		<delete dir="${build}" />
+		<delete dir="${libs.dir}" />
+		<delete dir="${doc.dir}" />
+	</target>
+	<target name="libcpy" depends="clean, init" description="Add libs to dir">
+		<copy todir="${libs.dir}">
+			<fileset dir="${basedir}/webapp/WEB-INF/lib" includes="**/*.jar" />
+		</copy>
+	</target>
+	<target name="build" depends="clean, libcpy" description="Builds the application">
+		<!-- Создание директорий -->
+		<mkdir dir="${build.classes}" />
+
+		<!-- Компиляция исходных файлов -->
+		<javac srcdir="${src.dir}" destdir="${build.classes}" debug="true" includeantruntime="false" deprecation="true" optimize="true">
+			<classpath refid="libs.dir" />
+		</javac>
+
+		<!-- Копирование необходимых файлов -->
+		<copy todir="${build.classes}">
+			<fileset dir="${src.dir}" includes="**/*.*" excludes="**/*.java" />
+			<fileset dir="${resources.dir}" includes="**/*.*" />
+		</copy>
+	</target>
+	
+	<target name="dist" depends="build">
+		<war destFile='${dist.dir}/${app.name}.war' webxml='${basedir}/webapp/WEB-INF/web.xml'>
+				<classes dir='${build.classes}' />
+				<manifest>
+			         <attribute name="Version" value="${build.number}"/>
+				</manifest>
+				<fileset dir='${basedir}/webapp' excludes='WEB-INF/web.xml' />
+	    </war>
+		<antcall target="distMinor"></antcall>
+	</target>
+	<target name="init">
+		   <mkdir dir="${dist.dir}" />
+		   <mkdir dir="${libs.dir}" />
+	       <echoproperties destfile="${assembled.properties}"/>
+	       <filter filtersfile="${assembled.properties}"/>
+	</target>
+	<target name="changedescriptorparams" depends="init">
+		<copy todir="${basedir}/webapp/META-INF" preservelastmodified="true" overwrite="true">
+					<fileset dir="${descriptor.template}" includes="**/*.xml" />
+				</copy>
+				 <replace file="${basedir}/webapp/META-INF/context.xml"  propertyfile="${assembled.properties}">
+					 	<replacefilter token="@db.user@" property="db.user"/>
+					 	<replacefilter token="@db.password@" property="db.password"/>
+					 	<replacefilter token="@db.url@" property="db.url"/>
+				</replace>
+	</target>
+	<target name="changesqlparams" depends="init">
+		<copy todir="${sql.dir}" preservelastmodified="true" overwrite="true">
+			<fileset dir="${sqlschema.template}" includes="**/*.sql" />
+		</copy>
+		
+		 <replace file="${sql.dir}/CreateDBUser.sql"  propertyfile="${assembled.properties}">
+			 	<replacefilter token="@db.user@" property="db.user"/>
+			 	<replacefilter token="@db.password@" property="db.password"/>
+		</replace>
+		 <replace file="${sql.dir}/DropUserTables.sql"  propertyfile="${assembled.properties}">
+			 	<replacefilter token="@db.user@" property="db.user"/>
+		</replace>
+		<replace file="${sql.dir}/DeleteDBSchema.sql"  propertyfile="${assembled.properties}">
+					 	<replacefilter token="@db.user@" property="db.user"/>
+				</replace>
+	</target>
+	<target name="createdbschema" depends="changesqlparams">
+		<sql driver="oracle.jdbc.driver.OracleDriver" 
+			 url="jdbc:oracle:thin:@${db.hostname}:${db.port}:${db.sid}"
+			 userid="${db.admin}"
+			 password="${db.passwordForAdmin}"
+			 print="yes"
+		     delimiter="/"
+			 delimitertype="row">
+			 <transaction  src="${sql.dir}/CreateDBUser.sql"/>
+			 <classpath>
+				<pathelement location="${basedir}/lib/ojdbc14.jar" />
+			</classpath>
+		</sql>
+		
+	</target>
+	<target name="deletedbschema" depends="changesqlparams">
+			<sql driver="oracle.jdbc.driver.OracleDriver" 
+				 url="jdbc:oracle:thin:@${db.hostname}:${db.port}:${db.sid}"
+				 userid="${db.admin}"
+				 password="${db.passwordForAdmin}"
+				 print="yes"
+			     delimiter="/"
+				 delimitertype="row">
+				 <transaction  src="${sql.dir}/DeleteDBSchema.sql"/>
+				 <classpath>
+					<pathelement location="${basedir}/lib/ojdbc14.jar" />
+				</classpath>
+			</sql>
+			
+		</target>
+	<target name="create-db" depends="libcpy, createdbschema">
+		<sql driver="oracle.jdbc.driver.OracleDriver" 
+			url="jdbc:oracle:thin:@${db.hostname}:${db.port}:${db.sid}"
+			userid="${db.user}"
+			password="${db.password}"
+			print="yes"
+			delimiter="/"
+			delimitertype="row">
+			<transaction  src="${sql.dir}/CreateTables.sql"/>
+			<transaction  src="${sql.dir}/CreateSequence.sql"/>
+			<transaction  src="${sql.dir}/CreateTriggers.sql"/>
+			<transaction  src="${sql.dir}/CreateFunctions.sql"/>
+			<transaction  src="${sql.dir}/CreateViews.sql"/>
+			<transaction  src="${sql.dir}/Datainsert1.sql"/>
+			<classpath>
+				<pathelement location="${basedir}/lib/ojdbc14.jar" />
+			</classpath>
+		</sql>
+	</target>
+	<target name="drop-db-data" depends="changesqlparams">
+		<sql driver="oracle.jdbc.driver.OracleDriver" 
+					url="jdbc:oracle:thin:@${db.hostname}:${db.port}:${db.sid}"
+					userid="${db.user}"
+					password="${db.password}"
+					print="yes"
+					delimiter="/"
+					delimitertype="row">
+					<transaction  src="${sql.dir}/DropUserTables.sql"/>
+		        <classpath>
+					<pathelement location="${basedir}/lib/ojdbc14.jar" />
+				</classpath>
+				</sql>
+	</target>
+	<target name="javadoc"  description="Generates Javadoc">
+	        <echo message="Generating javadoc..."/>
+	        <mkdir dir="${doc.dir}"/>
+	        <javadoc 
+	            destdir="${doc.dir}"
+	            nohelp="true"
+	        	source="1.5"
+	            maxmemory="96m"  
+	        	use="true"  
+	        	version="true"  
+	        	author="true"
+	            header="${app.name} JavaDocs"
+	            windowtitle="${app.name} JavaDocs">
+	            <sourcepath location="${src.dir}"/>
+	        </javadoc>
+	    </target>
+	<target name="dist-src" depends="init">
+		 <zip destfile="${dist.dir}/src.zip"
+		    basedir="${basedir}"
+		    includes="**/*.java , webapp/**, ant/**, resources/**,  sql/**"
+		 	excludes="**/*.jar"/>
+	</target>
+	<target name="current-number">
+	 <echo>Current build number:${build.number}</echo>
+	</target>
+	<target name="distMinor">
+	    <propertyfile  file="${ant.dir}/build.version">
+	            <entry key="build.minor.number" type="int" operation="+" value="1" pattern="00"/>
+	    </propertyfile>
+	</target>
+	<target name="distMajor">
+	    <propertyfile  file="${ant.dir}/build.version">
+	            <entry key="build.major.number" type="int" operation="+" value="1" pattern="00"/>
+	            <entry key="build.minor.number" type="int" value="0" pattern="00"/>
+	    </propertyfile>
+	</target>
+	<target name="all">
+	    <propertyfile  file="${ant.dir}/build.version">
+	            <entry key="build.major.number" type="int" operation="+" value="1" pattern="00"/>
+	            <entry key="build.minor.number" type="int" operation="+" value="1" pattern="00"/>
+	    </propertyfile>
+	</target>
+</project> 	

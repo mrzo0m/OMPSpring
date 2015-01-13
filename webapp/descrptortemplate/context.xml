@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>  
+	   <Resource name="jdbc/oralocal" auth="Container" 
+	   		 type="javax.sql.DataSource"
+	   		 username="@db.user@"
+	   		 password="@db.password@"
+             driverClassName="oracle.jdbc.driver.OracleDriver"
+   			 factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+             url="@db.url@"
+             validationQuery="SELECT sysdate FROM dual"
+             maxActive="20" maxIdle="3" maxWait="10000"
+              />
+</Context>

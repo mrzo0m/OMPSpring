@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<c:url var="cssUrl" value="/styles/items.css" />
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<div id="search">
+		<form:form method="post" name="searchForm" id="searchForm"
+			action="showitems.htm">
+
+			<div class="buttons">
+
+
+				<ul>
+					<li><div class="searchStuff">
+							<input type="hidden" name="command" value="search" />
+							<form:errors path="keywordInput" cssClass="error" />
+							<input name="keywordInput" type="text" id="keywordInput" /> <select
+								name="shipping">
+								<option value="1">UID</option>
+								<option value="2">Title</option>
+								<option value="3">Description</option>
+							</select>
+						</div></li>
+					<li><input type="submit" class="btn" value="search" /></li>
+					<li><c:url var="advancedSearchUrl" value="/advancedsearch.htm" />
+						<a href="${advancedSearchUrl}">Advanced Search</a></li>
+					<li><c:url var="clear"
+							value="/showitems.htm?command=removesearch" /> <a
+						href="${clear}">clear</a></li>
+				</ul>
+			</div>
+		</form:form>
+		<div class="clear"></div>
+	</div>
+</div>

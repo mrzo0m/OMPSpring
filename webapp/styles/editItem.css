@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+.outer {
+	float: left;
+}
+
+.field {
+	clear: both;
+	text-align: right;
+}
+
+.field input {
+	width: 15em;
+	margin-left: 6em;
+	margin-bottom: 0.4em;
+}
+
+.message {
+	margin-bottom: 0.4em;
+	clear: both;
+	text-align: right;
+}
+
+label {
+	float: left;
+}
+
+.field textarea {
+	width: 430px;
+	height: 50px;
+	padding: 3px;
+	margin-bottom: 1em;
+}
+
+.main {
+	clear: both;
+	float: left;
+}
+
+.buttonLine #submitBtn {
+	width: 110px;
+	height: 21px;
+	border: 0px;
+	background-image: url("../images/publishSave.png");
+	background-repeat: no-repeat;
+}
+
+.buttonLine #resetButton {
+	width: 55px;
+	height: 21px;
+	border: 0px;
+	background-image: url("../images/reset.png");
+	background-repeat: no-repeat;
+}

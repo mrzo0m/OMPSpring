@@ -8,7 +8,7 @@
 	<property name="db.port" value="1521" />
 	<property name="db.sid" value="xe" />
 	<property name="db.admin" value="SYSTEM" />
-	<property name="db.passwordForAdmin" value="5FD3YccKt" />
+	<property name="db.passwordForAdmin" value="123456" />
 	<property name="db.user" value="OMPTEST" />
 	<property name="db.password" value="test" />
 	<property name="context.root" value="OnlineMarketplace" />

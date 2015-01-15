@@ -1,4 +1,4 @@
-package java.com.epam.training.persistence;
+package com.epam.training.persistence;
 
 import com.epam.training.persistence.DAOFactory;
 import org.junit.Before;

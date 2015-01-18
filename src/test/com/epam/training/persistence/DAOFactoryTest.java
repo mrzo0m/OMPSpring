@@ -1,37 +1,42 @@
 package com.epam.training.persistence;
 
-import com.epam.training.persistence.DAOFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.List;
+import static org.junit.Assert.*;
 
-import static org.mockito.Mockito.*;
-
-/**
- * Created by Oleg_Burshinov on 14.01.2015.
- */
-@RunWith(MockitoJUnitRunner.class)
 public class DAOFactoryTest {
-    private DAOFactory daoFactory;
+
     @Before
-    public void init() {
-        daoFactory = mock(DAOFactory.class);
+    public void setUp() throws Exception {
+        System.out.println("DAO init");
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        System.out.println("DAO tear down");
+
     }
 
     @Test
-    public void test() {
-        //mock creation
-        List mockedList = mock(List.class);
+    public void testGetUserDAO() throws Exception {
 
-        //using mock object
-        mockedList.add("one");
-        mockedList.clear();
+    }
 
-        //verification
-        verify(mockedList).add("one");
-        verify(mockedList).clear();
+    @Test
+    public void testGetItemDAO() throws Exception {
+
+    }
+
+    @Test
+    public void testGetBidsDAO() throws Exception {
+
+    }
+
+    @Test
+    public void testGetDAOFactory() throws Exception {
+
     }
 }

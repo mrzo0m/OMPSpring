@@ -1,33 +1,13 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/tiles-core-2.0.6.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/slf4j-api-1.5.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/servlet-api.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-core.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-webmvc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-context.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/commons-collections-3.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/commons-digester-2.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/tiles-jsp-2.0.6.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/tiles-api-2.0.6.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/jstl-1.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/commons-dbcp-1.2.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/mail.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-context-support.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/ojdbc14.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/slf4j-log4j12-1.5.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-jdbc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/commons-beanutils-1.8.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/activation.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-beans.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/commons-logging-1.1.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/log4j-1.2.15.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/spring-web.jar!/" />
-      <root url="jar://$PROJECT_DIR$/webapp/WEB-INF/lib/cglib-nodep-2.1_3.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/lib" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" type="SOURCES" />
   </library>
 </component>
